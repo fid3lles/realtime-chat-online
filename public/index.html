@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Chat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="chat-area">
+        <header id="windows-bar">
+            <div id="icons-wrapper">
+                <div>
+                    <img src="img/remove-outline.svg">
+                </div>
+                <div>
+                    <img src="img/tablet-landscape-outline.svg" style="height: 23px;">
+                </div>
+                <div>
+                    <img src="img/close-outline.svg" style="height: 35px;">
+                </div>
+            </div>
+        </header>
+
+        <header id="chat-info">
+            <div id="img-wrapper">
+                <img src="/public/img/people-circle-outline.svg" alt="">
+            </div>
+            <div id="chat-details">
+                <h2>Guilherme Caloteiro Group 😸</h2>
+                <span>My ID:<span id="my-id"></span></span>
+            </div>
+        </header>
+        
+        <section id="history">
+        </section>
+
+        <form id="message-form">
+            <input type="text" id="message" placeholder="TYPE YOUR MESSAGE..." autocomplete="off">
+            <button type="submit" id="send-message">Send</button>
+        </form>
+
+    </div>
+</body>
+<!-- <script src="/js/components/Message.js" type="module" ></script> -->
+<script type="module">
+    
+    //import { Message } from '/js/components/Message.js'
+
+    const socket = io();
+    var userId = "";
+    var messageForm = document.getElementById("message-form");
+    var messageHistory = document.getElementById("history");
+
+    socket.on('connect', () => {
+        userId = socket.id;
+        console.log(`User connected on Client with id: ${userId}`);
+        document.getElementById("my-id").textContent = userId;
+    });
+
+    socket.on('receveid-message', (message) => {
+        messageHistory.append(renderMessage(message, false));
+    });
+
+    messageForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let message = messageForm.querySelector("#message").value;
+
+        if(message.length){
+            
+            let messageObj = {
+                message: message
+            };
+
+            console.log("Enviando mensagem.");
+            socket.emit("send-message", message);
+
+            messageHistory.append(renderMessage(message, true));
+            messageForm.querySelector("#message").value = '';
+        }
+        
+    });
+
+    function renderMessage(messageElement, isMyMessage){
+        let message = document.createElement('div');
+
+        if(isMyMessage){
+            message.className = 'my-message';
+        } else {
+            message.className = 'their-message';
+        }
+
+        message.textContent = messageElement;
+        return message;
+    }
+</script>
+</html>

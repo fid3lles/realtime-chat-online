@@ -1,0 +1,220 @@
+:root {
+    --dev-gray: rgb(24, 24, 24);
+    --off-white: #E8E8E8;
+}
+
+body {
+    background-color: var(--off-white);
+    display: flex;
+    justify-content: center;
+
+}
+
+#windows-bar {
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    border-bottom: solid black 2px;
+}
+
+#icons-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+#icons-wrapper div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 100%;
+    width: 32px;
+    border-left: solid black 2px;
+}
+
+#icons-wrapper img {
+    color: white;
+}
+
+#chat-info {
+    display: flex;
+    background-color: white;
+    margin: 10px 10px 0 10px;
+    border: solid black 2px;
+}
+
+#chat-details {
+    font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    display: flex;
+    flex-direction: column;
+    line-height: 5px;
+}
+
+#chat-details h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+#img-wrapper {
+    width: 55px;
+    height: 55px;
+    border-radius: 100%;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+#chat-area {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    background-color: var(--off-white);
+    width: 440px;
+    height: 680px;
+    border: solid black 2px;
+    box-shadow: 8px 8px 0px 0px black;
+}
+
+#history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 95%;
+    height: 100%;
+    margin: 10px;
+    overflow-y: scroll;
+    border: solid black 2px;
+}
+
+.my-message {
+    background-color: black;
+    width: 200px;
+    margin: 10px 0px 5px 139px;
+    padding: 13px;
+    color: white;
+    font-weight: 900;
+}
+
+.their-message {
+    background-color: var(--off-white);
+    width: 200px;
+    margin: 10px 139px 5px 0px;
+    padding: 13px;
+    color: black;
+    font-weight: 900;
+}
+
+#message-form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 10px;
+    column-gap: 10px;
+}
+
+#message-form input {
+    width: 100%;
+    padding: 10px;
+    transition: .2s linear;
+    border: 2.5px solid black;
+    font-size: 14px;
+    letter-spacing: 2px;
+    outline: 0;
+}
+
+#message-form button {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.7em 2em;
+    border: 3px solid black;
+    border-radius: 2px;
+    position: relative;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s ease all;
+    z-index: 1;
+    background-color: black;
+}
+
+
+#message-form button:before {
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    opacity: 0;
+    content: '';
+    background-color: white;
+    z-index: -1;
+}
+
+#message-form button:hover,
+button:focus {
+    color: black;
+}
+
+#message-form button:hover:before,
+button:focus:before {
+    transition: 0.5s all ease;
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+#message-form button:active {
+    transform: scale(0.9);
+}
+
+#message-form input:focus {
+    border: 2.5px solid black;
+    box-shadow: 5px 5px 0px black;
+}
+
+::-webkit-scrollbar {
+    width: 19px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+    border: black solid 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+    border: black solid 2px;
+    background-image: url(/public/img/reorder-two-outline.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+::-webkit-scrollbar-button {
+    background: white;
+    height: 20px;
+    border: solid black 2px;
+    background-image: url(/public/img/caret-up-outline.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url(/public/img/caret-down-outline.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
