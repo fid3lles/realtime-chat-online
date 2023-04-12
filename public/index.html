@@ -26,11 +26,11 @@
 
         <header id="chat-info">
             <div id="img-wrapper">
-                <img src="/public/img/people-circle-outline.svg" alt="">
+                <img src="img/people-circle-outline.svg" alt="">
             </div>
             <div id="chat-details">
-                <h2>Guilherme Caloteiro Group 😸</h2>
-                <span>My ID:<span id="my-id"></span></span>
+                <h2>Guilherme Caloteiro 😸</h2>
+                <span>Your ID: <span id="my-id"></span></span>
             </div>
         </header>
         
@@ -44,11 +44,8 @@
 
     </div>
 </body>
-<!-- <script src="/js/components/Message.js" type="module" ></script> -->
 <script type="module">
     
-    //import { Message } from '/js/components/Message.js'
-
     const socket = io();
     var userId = "";
     var messageForm = document.getElementById("message-form");
@@ -56,45 +53,58 @@
 
     socket.on('connect', () => {
         userId = socket.id;
-        console.log(`User connected on Client with id: ${userId}`);
         document.getElementById("my-id").textContent = userId;
     });
 
-    socket.on('receveid-message', (message) => {
-        messageHistory.append(renderMessage(message, false));
+    socket.on('new-user', (userId) => {
+        messageHistory.append(document.createElement('p').textContent = socket.id + ' entrou na sala.');
+        messageHistory.scrollTop = messageHistory.scrollHeight;
+    });
+
+    socket.on('receveid-message', (messageObj) => {
+        console.log(messageObj);
+        messageHistory.append(renderMessage(messageObj, false));
+        messageHistory.scrollTop = messageHistory.scrollHeight;
     });
 
     messageForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        let message = messageForm.querySelector("#message").value;
+        let typpedMessage = messageForm.querySelector("#message").value;
 
-        if(message.length){
+        if(typpedMessage.length){
             
             let messageObj = {
-                message: message
+                author: userId,
+                message: typpedMessage
             };
 
-            console.log("Enviando mensagem.");
-            socket.emit("send-message", message);
+            socket.emit("send-message", messageObj);
 
-            messageHistory.append(renderMessage(message, true));
+            messageHistory.append(renderMessage(messageObj, true));
+            messageHistory.scrollTop = messageHistory.scrollHeight;
+
             messageForm.querySelector("#message").value = '';
         }
         
     });
 
-    function renderMessage(messageElement, isMyMessage){
-        let message = document.createElement('div');
-
+    function renderMessage(messageObj, isMyMessage){
+        let messageElement = document.createElement('div');
+        let authorElement = document.createElement('span');
+    
         if(isMyMessage){
-            message.className = 'my-message';
+            messageElement.className = 'my-message';
+            authorElement.textContent = "Me:";
         } else {
-            message.className = 'their-message';
+            messageElement.className = 'their-message';
+            authorElement.textContent = messageObj.author;
         }
+        messageElement.append(authorElement);
+        messageElement.append(document.createElement('br'));
+        messageElement.innerHTML += messageObj.message;
 
-        message.textContent = messageElement;
-        return message;
+        return messageElement;
     }
 </script>
 </html>

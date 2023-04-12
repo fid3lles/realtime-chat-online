@@ -116,6 +116,18 @@ body {
     font-weight: 900;
 }
 
+.my-message span {
+    color: blue;
+    text-transform: capitalize;
+    font-size: 12px;
+}
+
+.their-message span {
+    color: red;
+    text-transform: capitalize;
+    font-size: 12px;
+}
+
 #message-form {
     display: flex;
     align-items: center;
@@ -199,7 +211,7 @@ button:focus:before {
 ::-webkit-scrollbar-thumb {
     background: white;
     border: black solid 2px;
-    background-image: url(/public/img/reorder-two-outline.svg);
+    background-image: url(/img/reorder-two-outline.svg);
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -208,13 +220,13 @@ button:focus:before {
     background: white;
     height: 20px;
     border: solid black 2px;
-    background-image: url(/public/img/caret-up-outline.svg);
+    background-image: url(/img/caret-up-outline.svg);
     background-repeat: no-repeat;
     background-position: center;
 }
 
 ::-webkit-scrollbar-button:single-button:vertical:increment {
-    background-image: url(/public/img/caret-down-outline.svg);
+    background-image: url(/img/caret-down-outline.svg);
     background-repeat: no-repeat;
     background-position: center;
 }
